@@ -1,0 +1,58 @@
+:root {
+    --link-bg: cornsilk;
+    --heading: darkcyan;
+}
+
+#main {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+div.info {
+    text-align: left;
+    color: darkmagenta;
+}
+
+div.info h2 {
+    text-align: center;
+}
+
+#main>div>ul {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+}
+
+#main>div>ul>li {
+    position: relative;
+    width: 20em;
+    min-height: 2em;
+    background: var(--link-bg);
+    border: 1px solid gray;
+    padding: 5px;
+    padding-top: 0.8em;
+    margin: 0.3em;
+    text-align: center;
+    border-radius: 0.5em;
+    color: darkolivegreen;
+}
+
+#main>div>ul>li a:after {
+    content: attr(data-icon);
+    position: absolute;
+    right: 1.2em;
+    top: 0.5em;
+}
+
+#main>div>ul>li {
+    display: block;
+}
+
+h3 {
+    color: var(--heading);
+    display: block;
+    width: 20em;
+    margin: 1em;
+    margin-left: 2.5em;
+    text-align: center;
+}
