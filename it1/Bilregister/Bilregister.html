@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="no">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bilregister</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.3.0/css/foundation-flex.css">
+    <style>
+        body {
+            max-width: 700px;
+            margin: auto;
+            padding: 10px;
+        }
+        img {
+            width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+
+    <form id="skjema">
+        <input id="inpRegnr" type="text" required placeholder="Regnr (DJ12345)">
+        <input id="inpMerke" type="text" required placeholder="Fiat">
+        <input id="inpFarge" type="text" required placeholder="Farge på bilen">
+        <input id="inpPris" type="number" required placeholder="Pris">
+        <input id="inpBilde" type="file" required placeholder="Velg bilde" class="button">
+        <button type="submit" class="button">Registrer ny bil</button>
+    </form>
+    <hr>
+
+    <section id="biloversikt"></section>
+
+    <!--Vi har her endret firebase versjon fra 5.8.0 til 4.8.0 for å få firebase storage til å virke-->
+    <script src="https://www.gstatic.com/firebasejs/4.8.0/firebase.js"></script>
+    <script>
+        // Initialize Firebase
+        var config = {
+            apiKey: "AIzaSyAdfaTyk8-b269cICivZoTPX9w26TC7YgE",
+            authDomain: "it1-eksempler.firebaseapp.com",
+            databaseURL: "https://it1-eksempler.firebaseio.com",
+            projectId: "it1-eksempler",
+            storageBucket: "it1-eksempler.appspot.com",
+            messagingSenderId: "698458546501"
+        };
+        firebase.initializeApp(config);
+    </script>
+
+    <script>
+        var db = firebase.database();
+        var biler = db.ref("biler");
+        var storage = firebase.storage(); //Referanse til Firebase storage
+        var skjema = document.getElementById("skjema");
+        var inpRegnr = document.getElementById("inpRegnr");
+        var inpMerke = document.getElementById("inpMerke");
+        var inpPris = document.getElementById("inpPris");
+        var inpBilde = document.getElementById("inpBilde");
+        var biloversikt = document.getElementById("biloversikt");
+
+        function lagreData(snapshot) {
+            var bil = {
+                regnr: inpRegnr.value,
+                farge: inpFarge.value,
+                merke: inpMerke.value,
+                pris: inpPris.value,
+                bilde: snapshot.downloadURL
+            };
+            biler.push(bil);
+
+            // Nuller ut input-felt
+            inpRegnr.value = "";
+            inpFarge.value = "";
+            inpMerke.value = "";
+            inpPris.value = "";
+            inpBilde.value = "";
+            inpRegnr.focus();
+        }
+
+        function lagreBilde(evt) {
+            evt.preventDefault(); //Forhindrer at data sendes til en annen nettside
+            var bilde = inpBilde.files[0]; //
+            var bildelagring = storage.ref("bilbilder/" + new Date());
+            bildelagring.put(bilde).then(lagreData);
+        }
+
+        function visBiler(snapshot) {
+            var bil = snapshot.val();
+            biloversikt.innerHTML = `
+                <div>
+                    <h4>${bil.farge} ${bil.merke} selges for kr ${bil.pris}</h4>
+                    <img src="${bil.bilde}">
+                </div>
+                <hr>
+            ` + biloversikt.innerHTML;
+        }
+
+        skjema.addEventListener("submit", lagreBilde);
+        biler.on("child_added", visBiler);
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="no">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Min blogg</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.3.0/css/foundation-flex.css">
+    <style>
+        body {
+            max-width: 780px;
+            margin: auto;
+            padding: 10px;
+        }
+        video {
+            width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Lydbloggen</h1>
+    <form id="skjema">
+        <input type="text" id="inpTekst" required placeholder="Hva har du filmet?">
+        <input class="button" type="file" id="inpFilm" required>
+        <button class="button success" type="submit">Lagre blogginnlegg</button>
+    </form>
+
+    <main id="main"></main>
+
+    <!--Husk å endre Firebase version fra 5.8.1 til 4.8.1 så fungerer FS storage-->
+    <script src="https://www.gstatic.com/firebasejs/4.8.1/firebase.js"></script>
+    <script>
+        // Initialize Firebase
+        var config = {
+            apiKey: "AIzaSyAdfaTyk8-b269cICivZoTPX9w26TC7YgE",
+            authDomain: "it1-eksempler.firebaseapp.com",
+            databaseURL: "https://it1-eksempler.firebaseio.com",
+            projectId: "it1-eksempler",
+            storageBucket: "it1-eksempler.appspot.com",
+            messagingSenderId: "698458546501"
+        };
+        firebase.initializeApp(config);
+    </script>
+
+    <script>
+        let db = firebase.database();
+        let storage = firebase.storage();
+
+        let videobloggen = db.ref("videobloggen");
+
+        let skjema = document.getElementById("skjema");
+        let inpTekst = document.getElementById("inpTekst");
+        let inpFilm = document.getElementById("inpFilm");
+        let main = document.getElementById("main");
+
+        function lagreData(evt) {
+            evt.preventDefault(); // Stopper skjemaet fra å oppdater siden
+            let mittfinebilde = storage.ref("videobloggen/" + new Date());
+            mittfinebilde.put(inpFilm.files[0])
+                .then(function (snapshot) {
+                    videobloggen.push({
+                        tekst: inpTekst.value,
+                        url: snapshot.downloadURL
+                    });
+                });
+
+        }
+
+        function visBlogg(snapshot) {
+            let post = snapshot.val();
+            main.innerHTML = `<p>${post.tekst}</p>
+                                <video src="${post.url}" controls>
+                               ` + main.innerHTML;
+        }
+
+
+        skjema.addEventListener("submit", lagreData);
+        videobloggen.on("child_added", visBlogg);
+
+    </script>
+
+</body>
+
+</html>

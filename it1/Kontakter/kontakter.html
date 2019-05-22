@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="no">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.4.3/css/foundation-float.css">
+    <style>
+        body {
+            padding: 8px;
+            max-width: 700px;
+            margin: auto;
+        }
+        #skjema {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            grid-gap: 4px;
+        }
+        #skjema > button {
+            grid-column-start:  1;
+            grid-column-end:  4;
+        }
+    </style>
+    <title>Mine kontakter</title>
+</head>
+
+<body>
+
+    <form id="skjema">
+        <div>
+            <input type="text" id="inpNavn" placeholder="Kari Nordmann" required>
+        </div>
+        <div>
+            <input type="email" id="inpEpost" placeholder="ola@nordmann.no" required>
+        </div>
+        <div>
+            <input type="tel" id="inpTelefon" placeholder="22555555" required>
+        </div>
+        <button type="submit" class="button">Registrer ny kontakt</button>
+    </form>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Navn</th>
+                <th>Epost</th>
+                <th>Telefon</th>
+            </tr>
+        </thead>
+        <tbody id="tbKontakter">
+
+        </tbody>
+    </table>
+
+    <script src="https://www.gstatic.com/firebasejs/5.8.1/firebase.js"></script>
+    <script>
+        // Initialize Firebase
+        var config = {
+            apiKey: "AIzaSyAdfaTyk8-b269cICivZoTPX9w26TC7YgE",
+            authDomain: "it1-eksempler.firebaseapp.com",
+            databaseURL: "https://it1-eksempler.firebaseio.com",
+            projectId: "it1-eksempler",
+            storageBucket: "it1-eksempler.appspot.com",
+            messagingSenderId: "698458546501"
+        };
+        firebase.initializeApp(config);
+    </script>
+
+    <script>
+        const db = firebase.database();
+        const kontakter = db.ref("kontakter");
+
+        const skjema = document.getElementById("skjema");
+        const inpNavn = document.getElementById("inpNavn");
+        const inpEpost = document.getElementById("inpEpost");
+        const inpTelefon = document.getElementById("inpTelefon");
+        const tbKontakter = document.getElementById("tbKontakter");
+
+        function registrerKontakt(evt) {
+            evt.preventDefault();
+            const kontakt = {
+                navn: inpNavn.value,
+                epost: inpEpost.value,
+                telefon: inpTelefon.value
+            };
+            kontakter.push(kontakt);
+            skjema.reset();
+            inpNavn.focus();
+        }
+
+        function visKontakt(snap) {
+            const kontakt = snap.val();
+            tbKontakter.innerHTML += `
+                <tr>
+                    <td>${kontakt.navn}</td>
+                    <td>${kontakt.epost}</td>
+                    <td>${kontakt.telefon}</td>
+                </tr>
+            `;
+        }
+        kontakter.on("child_added", visKontakt);
+        skjema.onsubmit = registrerKontakt;
+
+    </script>
+
+</body>
+
+</html>

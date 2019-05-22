@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="no">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Sporing med Firebase</title>
+</head>
+
+<body>
+
+    <main id="main"></main>
+
+    <script src="https://www.gstatic.com/firebasejs/5.8.1/firebase.js"></script>
+    <script>
+        // Initialize Firebase
+        var config = {
+            apiKey: "AIzaSyAdfaTyk8-b269cICivZoTPX9w26TC7YgE",
+            authDomain: "it1-eksempler.firebaseapp.com",
+            databaseURL: "https://it1-eksempler.firebaseio.com",
+            projectId: "it1-eksempler",
+            storageBucket: "it1-eksempler.appspot.com",
+            messagingSenderId: "698458546501"
+        };
+        firebase.initializeApp(config);
+    </script>
+
+    <script>
+        var db = firebase.database();
+        var observasjoner = db.ref("observasjoner");
+        var main = document.getElementById("main");
+
+        function lagreSpor(pos) {
+            observasjoner.push({
+                lat: pos.coords.latitude,
+                lng: pos.coords.longitude
+            });
+
+            main.innerHTML += `
+                <div>${pos.coords.latitude}</div>
+                <div>${pos.coords.longitude}</div>
+            `;
+        }
+        navigator.geolocation.watchPosition(lagreSpor);
+
+    </script>
+
+</body>
+
+</html>

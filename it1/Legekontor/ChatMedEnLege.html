@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Chat med en lege</title>
+	<style>
+		main > input{
+			max-width: 500px;
+			max-height: 400px;
+			min-height: 200px;
+			min-width: 400px;
+		}
+		
+		main > textarea{
+			max-width: 500px;
+			max-height: 400px;
+			min-height: 200px;
+			min-width: 400px;
+		}
+	</style>
+</head>
+<body>
+
+<header></header>
+
+<main id="main">
+	<input type="text" placeholder="Skriv en melding til din venn" id="inpMelding">
+	<textarea placeholder="skriv her..."></textarea>
+
+</main>
+
+<footer></footer>
+
+<script src="https://www.gstatic.com/firebasejs/5.8.3/firebase.js"></script>
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyBX_6dHRFCpEd9JpHef9nmu3-npAQ0w-Aw",
+    authDomain: "legekontor-2bd01.firebaseapp.com",
+    databaseURL: "https://legekontor-2bd01.firebaseio.com",
+    projectId: "legekontor-2bd01",
+    storageBucket: "legekontor-2bd01.appspot.com",
+    messagingSenderId: "331577464640"
+  };
+  firebase.initializeApp(config);
+</script>
+
+</body>
+</html>

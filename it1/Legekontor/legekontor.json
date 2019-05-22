@@ -1,0 +1,62 @@
+{
+  "behandlinger" : {
+    "bentetthetsmåling" : {
+      "avdeling" : "a",
+      "bilde" : "bentetthetsmåling.jpg",
+      "lege" : [ "Fredrik Pedersen", "Sofie Torp", "Lisa Torfinsen" ],
+      "navn" : "Bentetthetsmåling",
+      "pris" : 300
+    },
+    "fysioterapi" : {
+      "avdeling" : "e",
+      "bilde" : "fysioterapi.jpg",
+      "lege" : [ "Fredrik Pedersen", "Peder Kvaal", "Lisa Torfinsen", "Sofie Torp" ],
+      "navn" : "Fysioterapi",
+      "pris" : 500
+    },
+    "opptrening" : {
+      "avdeling" : "d",
+      "bilde" : "opptrenin.jpg",
+      "lege" : [ "Lisa Torfinsen", "Peder Kvaal" ],
+      "navn" : "Opptrening",
+      "pris" : "gratis"
+    },
+    "ortopedisk" : {
+      "avdeling" : "c",
+      "bilde" : "ortopedisk.jpg",
+      "lege" : [ "Lisa Torfinsen", "Peder Kvaal", "Sofie Torp" ],
+      "navn" : "Ortopedisk",
+      "pris" : 1000
+    },
+    "revmatologisk" : {
+      "avdeling" : "b",
+      "bilde" : "revmatorisk.jpeg",
+      "lege" : [ "Fredrik Pedersen", "Peder Kvaal" ],
+      "navn" : "Revmatologisk",
+      "pris" : 400
+    },
+    "røntgen" : {
+      "avdeling" : "a",
+      "bilde" : "røntgen.jpg",
+      "lege" : [ "Lisa Torfinsen", "Peder Kvaal" ],
+      "navn" : "Røntgen",
+      "pris" : 290
+    }
+  },
+  "lege001" : {
+    "etternavn" : "Pedersen",
+    "fornavn" : "Fredrik"
+  },
+  "lege002" : {
+    "etternavn" : "Torp",
+    "fornavn" : "Sofie"
+  },
+  "lege003" : {
+    "etternavn" : "Torfinsen",
+    "fornavn" : "Lisa"
+  },
+  "lege004" : {
+    "etternavn" : "Kvaal",
+    "fornavn" : "Peder"
+  }
+}

@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Klesbutikken AS</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.3.1/css/foundation-flex.min.css">
+    <style>
+        body {
+            padding: 10px;
+        }
+
+        main {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr;
+            grid-gap: 10px;
+        }
+
+        main > article > img {
+            width: 100%;
+        }
+
+        header > nav {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+        }
+
+        input {
+            width: 100%;
+        }
+
+        h1 {
+            font-size: 1.25rem;
+        }
+
+        @media (max-width: 1100px) {
+            main {
+                grid-template-columns: 1fr 1fr 1fr;
+            }
+        }
+        @media (max-width: 900px) {
+            main {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 700px) {
+            main {
+                grid-template-columns: 1fr;
+            }
+
+            header > nav {
+                grid-template-columns: 1fr;
+            }
+            header > nav > .button {
+                margin-bottom: 1px;
+            }
+        }
+
+    </style>
+</head>
+<body>
+
+
+    <header>
+        <nav>
+            <button class="button" onclick="visAlleVarer()">Alle varer</button>
+            <button class="button success" onclick="visBukser()">Bukser</button>
+            <button class="button" onclick="visSkjorter()">Skjorter</button>
+            <button class="button success" onclick="visKurv()">Handlekurv(<b id="antallVarer">0</b>)</button>
+            <button class="button warning" onclick="tom()">Tøm handlekurv</button>
+        </nav>
+    </header>
+    <aside id="kurven" style="display: none;"></aside>
+
+    <main></main>
+
+    <script src="https://www.gstatic.com/firebasejs/3.9.0/firebase.js"></script>
+    <script>
+        // Initialize Firebase
+        var config = {
+            apiKey: "AIzaSyD7FS8R-au_1gSp57YuQIjiAGIoZL5rUZw",
+            authDomain: "min-database.firebaseapp.com",
+            databaseURL: "https://min-database.firebaseio.com",
+            projectId: "min-database",
+            storageBucket: "min-database.appspot.com",
+            messagingSenderId: "614855754958"
+        };
+        firebase.initializeApp(config);
+    </script>
+
+    <script>
+
+        let db = firebase.database();
+        let bukser = db.ref("butikken/varer/bukser");
+        let skjorter = db.ref("butikken/varer/skjorter");
+        let bestillinger = db.ref("butikken/bestillinger");
+
+        let main = document.querySelector("main");
+        let antallVarer = document.getElementById("antallVarer");
+        let kurven = document.getElementById("kurven");
+
+
+        function tom() {
+            bestillinger.remove();
+            kurven.innerHTML = "";
+        }
+
+        function visAntall(snap) {
+            antallVarer.innerHTML = snap.numChildren();
+        }
+
+        function visKurv() {
+
+            if(kurven.style.display === "block") {
+                kurven.style.display = "none";
+            } else {
+                kurven.style.display = "block";
+            }
+
+        }
+
+
+        function visHandlekurv(snap) {
+
+            let bestilling = snap.val();
+
+            let ref = "butikken/varer/" + bestilling.vare;
+            let vareRef = db.ref(ref);
+
+            vareRef.on("value", function(vareSnap){
+                let vare = vareSnap.val();
+                kurven.innerHTML += `
+                <p>${bestilling.antall} x ${vare.merke} ${new Date(bestilling.tid)}</p>
+            `;
+            });
+
+
+        }
+
+        bestillinger.on("value", visAntall);
+        bestillinger.on("child_added", visHandlekurv);
+
+        function kjopVare(ref) {
+            bestillinger.push({
+                vare : ref,
+                antall : 1,
+                tid : firebase.database.ServerValue.TIMESTAMP
+            });
+        }
+
+        function visVare(snap) {
+            let vare = snap.val();
+            let parent = snap.ref.parent.key;
+            let key = snap.key;
+            let vareReferanse = parent + "/" + key;
+
+            main.innerHTML += `
+                <article>
+                    <img src="bilder/${vare.bilde}">
+                    <h1>${vare.merke} ${vare.navn}</h1>
+                    <button onclick="kjopVare('${vareReferanse}')" class="button">Legg i handlekurv</button>
+                </article>
+            `;
+
+        }
+
+        function visSkjorter() {
+            main.innerHTML = "";
+            skjorter.on("child_added", visVare);
+        }
+
+        function visBukser() {
+            main.innerHTML = "";
+            bukser.on("child_added", visVare);
+        }
+
+        function visAlleVarer() {
+            main.innerHTML = "";
+            skjorter.on("child_added", visVare);
+            bukser.on("child_added", visVare);
+        }
+
+
+        bukser.on("child_added", visVare);
+
+
+    </script>
+
+
+</body>
+</html>
