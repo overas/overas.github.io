@@ -1,4 +1,4 @@
-07: Timeplanen
+01: Timeplanen
 ==============
 Du skal lage en HTML-side som inneholder både bilde, lister og en tabell.
 
