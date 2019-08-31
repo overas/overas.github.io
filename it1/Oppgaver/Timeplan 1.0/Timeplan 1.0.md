@@ -6,7 +6,7 @@ Oppgave
 -------
 Det er skolestart, og du skal lage en timeplan i HTML. Lag siden som er vist i bildet nedenfor. Bytt ut fagene med de du selv har. Lag en nettside som heter `timeplan.html`. Legg også bildet i en egen mappe med navn `bilder`. Bildet skal skaleres sånn at det er 400 piksler i bredden.
 
-![Den ferdige nettsiden](https://raw.githubusercontent.com/overas/overas.github.io/master/it1/Bilder/Andrew_Classroom_De_La_Salle_University.jpeg)
+![Den ferdige nettsiden](https://raw.githubusercontent.com/overas/overas.github.io/master/it1/Bilder/timeplan-1.png)
 
 Ressurser
 ---------
