@@ -1,0 +1,1 @@
+Her finner du IT1 innleveringsoppgaver slik at du kan lære faget gjennom aktiv jobbing med oppgaver som er relevante for skolehverdagen din.
