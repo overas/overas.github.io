@@ -6,7 +6,7 @@
 
 Du skal friske opp nettsiden `index.html` som du laget i oppgaven `McBergbys - HTML skjemaer`, slik at den blir mye penere og tøffere enn det du ser på bildet nedenfor (klikk på bildet for å se det i stor størrelse). Nettsiden skal lagres i en mappe med navnet `mcbergbys-04`. For å endre utseende på nettsiden skal du bruke CSS. Legg CSS-koden i et eget `style`-element som du legger inni `head`-elementet i HTML-fila. 
 
-![McBergbys](https://raw.githubusercontent.com/fagstoff/IT1/master/Bilder/McB04.png)
+![McBergbys](https://github.com/overas/overas.github.io/raw/master/it1/Bilder/McB04.png)
 
 ## Ressurser
 
