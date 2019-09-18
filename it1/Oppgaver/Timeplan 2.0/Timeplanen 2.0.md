@@ -6,7 +6,7 @@ Oppgave
 -------
 Jobb videre med fila `timeplan.html` som du laget i forrige oppgave. Lag siden som er vist i bildet nedenfor. 
 
-I versjon 2 av timeplanen skal du lage fargekoder og leke deg med rammer på tabellen. La hvert fag få egen bakgrunnsfarge, og lag tykkere ramme på tabellen.
+I versjon 2 av timeplanen skal du legge til farger og leke deg med rammer på tabellen. La hvert fag få egen bakgrunnsfarge, og lag tykkere ramme på tabellen.
 
 ![Den ferdige nettsiden](https://github.com/overas/overas.github.io/blob/master/it1/Bilder/timeplan2.png)
 
