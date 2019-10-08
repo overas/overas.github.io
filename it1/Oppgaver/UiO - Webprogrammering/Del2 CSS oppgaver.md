@@ -1,5 +1,5 @@
-CSS
-===
+CSS øvingsoppgaver
+==================
 Du skal nå bygge videre på sidene vi jobbet med sist. Oppgavene legger opp til en del eksperimentering på egenhånd.
 
 Oppgave 1

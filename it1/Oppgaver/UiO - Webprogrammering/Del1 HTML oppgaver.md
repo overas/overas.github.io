@@ -1,5 +1,5 @@
-HTML
-==========
+HTML øvingsoppgaver
+===================
 
 Oppgave 1
 ---------
